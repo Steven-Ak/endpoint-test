@@ -1,7 +1,12 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
-@app.get("/hi/{name}")
-def say_hi(name: str):
-    return {"message": f"hi, {name}"}
+class Person(BaseModel):
+    name: str
+    age: int
+
+@app.post("/greet")
+def greet_person(person: Person):
+    return {"message": f"Hi {person.name}, you are {person.age} years old!"}
